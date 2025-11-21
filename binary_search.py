@@ -33,7 +33,7 @@ Constraints:
 
 # --- YOUR O(log n) SOLUTION GOES HERE ---
 
-def binary_search(nums, target):
+def binary_search_recrusive(nums, target):
     """
     Searches for a target value in a sorted list of integers
     using the Binary Search algorithm.
@@ -54,16 +54,34 @@ def binary_search(nums, target):
         else: return -1
     mid = n//2
     if nums[mid] < target:
-        index = binary_search(nums[mid:n], target)
+        index = binary_search_recrusive(nums[mid:n], target)
         if index > -1:
             return mid + index
         return index
     elif nums[mid] > target:
-        index =  binary_search(nums[0:mid], target)
+        index =  binary_search_recrusive(nums[0:mid], target)
         return index
     else:
         return mid
 
+def binary_search_iterative(nums, target):
+    n = len(nums)
+    if (n < 1): return -1
+    if (n==1):
+        if nums[0] == target: return 0
+        return -1
+   # DO IT WITOUT RECURSION MIGHT BE EASIER
+    left = 0
+    right = n-1
+    while left <= right:
+        mid = (left+right)//2
+        if nums[mid] == target: 
+            return mid
+        elif nums[mid] < target: 
+                left = mid + 1
+        else:
+                right = mid - 1
+    return -1
 
 # --- Test Cases ---
 # Format: ((input_array, target), expected_index)
@@ -116,7 +134,7 @@ def run_tests():
         nums, target = test_input  # Unpack the tuple
         
         try:
-            actual_output = binary_search(nums, target)
+            actual_output = binary_search_recrusive(nums, target) # binary_search_iterative
             
             # Special check for duplicate case
             is_pass = False

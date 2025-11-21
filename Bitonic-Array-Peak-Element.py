@@ -67,7 +67,18 @@ def find_peak_element(nums):
     else:
         return nums[mid]
 
-
+def find_peak_element_iterative(nums):
+    n = len(nums)
+    if (n==1): return nums[0]
+    left = 0
+    right = n-1
+    while left <= right:
+        mid = (left+right)//2
+        if (left ==right): return nums[mid]
+        elif (nums[mid] > nums[mid+1]):
+            right = mid
+        else:
+            left = mid+1
 # --- Test Cases ---
 # Format: (input_array, expected_peak)
 test_cases = [
@@ -101,7 +112,7 @@ def run_tests():
     
     for i, (test_input, expected_output) in enumerate(test_cases):
         try:
-            actual_output = find_peak_element(test_input)
+            actual_output = find_peak_element_iterative(test_input)
             
             if actual_output == expected_output:
                 print(f"[PASS] Test {i+1}")
